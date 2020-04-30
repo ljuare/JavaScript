@@ -37,16 +37,32 @@
 		<script>
 			function calcularIVA(){
 				/* 1) Seleccionar el campo numérico y guardarlo en una variable */
-
+				let campo = document.querySelector("#precio")
 				/* 2) Obtener el valor del campo */
+				let valor = campo.value
+				let valorFinal = valor * 1.21
 
 				/* 3) Escribir en el span el valor del campo + IVA */
+				// Con toFixed le digo cuantos decimales tiene que tomar
+				document.querySelector(".total").innerText = valorFinal.toFixed(2)
 
 				/* 4) Si el valor con iva es superior a 100 asignar la clase "alerta" al mensaje, si es menor entonces quitarla */
-			}
+				// Con classList puedo agregar o quitar clases
+				if ( valorFinal > 100 ){
+					document.querySelector(".mensaje").classList.add("alerta")
+				} else {
+					document.querySelector(".mensaje").classList.remove("alerta")
+				}
+				
+			}	
+
 			/* 5) seleccionar el boton y guardarlo en una variable */
+			let boton = document.querySelector("#calcular")
 
 			/* 6) asignar al click del boton la funcion calcularIVA */
+			// Cuando hacemos asignacion a un evente, solamente ponemos la funcion, NO LOS PARENTESIS
+			boton.onclick = calcularIVA
+
 		</script>
 	</body>
 </html>

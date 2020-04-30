@@ -37,6 +37,7 @@
 			<p>Mostrar un mensaje en el <code>&lt;article&gt;</code> que indique el cuanto valen y cuantas unidades hay de ese producto.</p>
 			<article>
 
+
 			</article>
 		</aside>
 
@@ -72,18 +73,34 @@
 			console.log(precio)
 			console.log(disponible)
 
-			if(nombre == "" || nombre == null || nombre == undefined){
-				alert("ERROR - NOMBRE VACIO")
+			while(nombre == "" || nombre == null || nombre == undefined || isNaN(nombre) == false){
+				alert("ERROR - EL CASILLERO ESTÁ VACÍO O INCORRECTO")
+				nombre = prompt("Reingrese nombre:")
 			}
 
-			if( isNaN(stock) || stock < 0 || stock > 1000 ){
-				alert("ERROR - INGRESE UN STOCK VÁLIDO")				
+			while( isNaN(stock) || stock < 0 || stock > 1000 ){
+				alert("ERROR - INGRESE UN STOCK VÁLIDO")
+				stock = prompt("Reingrese stock (solo número):")
 			}
 
-			if( isNaN(precio) || stock < 0 ){
-				alert("ERROR - INGRESE UN PRECIO VÁLIDO")				
+			while( isNaN(precio) || precio < 0 ){
+				alert("ERROR - INGRESE UN PRECIO VÁLIDO")
+				precio = prompt("Reingrese precio (solo número):")
 			}
 
+			if( disponible == undefined ){
+				alert("ERROR - ESPECIFIQUE DISPONIBILIDAD")
+			}
+
+			// Antes de 2015: concatenación
+			// let mensaje = "Hay "+stock+" unidades de "+nombre+" que valen "+precio+" cada una"
+			
+			// Despues de 2015: template string
+			let mensaje = `Hay ${stock} unidades de ${nombre} que valen $${precio} cada uno`
+
+			// Manipulacion del DOM - Document Object Model
+			document.querySelector("article").innerText = mensaje
+			// Con esto lo que hago es decirle que dentro del documento seleccione el article y le ponga un texto interno que sea el mensaje que programé
 		</script>
 	</body>
 </html>

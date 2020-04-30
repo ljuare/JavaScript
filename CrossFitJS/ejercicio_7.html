@@ -59,20 +59,72 @@
 
 		<script>
 			/* 1) Seleccionar todas las habitaciones */
-
+			let habitaciones = document.querySelectorAll(".habitacion")
+			
 			/* 2) Seleccionar el select */
+			let menu = document.querySelector("select[name=habitacion]")
 
 			/* 3) Asignar la funcion mostrarOpcion al evento correspondiente */
+			menu.onchange = mostrarOpcion
+
+			esconderHabitaciones() //<--1) Cuando cargo la pagina
 
 			/* 4) Pensar una solucion logica para esconder todas las habitaciones cada vez que sea necesario */
+			// La posicion de una clase siempre va entre corchetes
+			
+			// debugger: Sirve para ir viendo paso por paso como funciona el codigo. Por ej en un bucle.
+
+			//WHILE:
+			/*
+			let contador = 0
+			while( contador < 10 ){
+				console.log("Esta es el saludo #${contador}`")
+				contador++
+			}
+			*/
+
+			//habitaciones[0].classList.add("esconder")
+			//habitaciones[1].classList.add("esconder")
+			//habitaciones[2].classList.add("esconder")
+			
+			function esconderHabitaciones(){
+				for(let i = 0; i < habitaciones.length; i++){ // Contador (i) = 0; .lenght significa que abarca todas las habitaciones disponibles (esto es por si se van agregando habitaciones a traves del tiempo o yo nisiquiera se el total de habitaciones que hay); i++ significa que cada vez q termine el bucle sume una habitacion mas y ahi el i de abajo va a cambiar 
+					habitaciones[i].classList.add("esconder") // Acá lo que hago es decirle que para el numero de habitacion que corresponde en ese momento, le agregue la clase esconder
+				}	
+			}
 
 			function mostrarOpcion(){
+				esconderHabitaciones() // <-- 2)Cuando se esta por mostrar una habitacion (esconde la anterior)
 				/* 5) Obtener la opción seleccionada */
+				let opcion = menu.value
+				//console.log(`Usted eligió la habitación ${menu.value}`)
+				if(opcion == 0){
+					return // Con return salgo automaticamente del bucle o funcion
+				}
 
 				/* 6) Seleccionar la habitación correspondiente usando un selector dinámico */
+				let elegida = document.querySelector(`.habitacion-${opcion}`)
+				//console.log(elegida)
 
 				/* 7) Asignar la clase correspondiente */
+				elegida.classList.remove("esconder")
 			}
+
+			////////////////////////////////////////////
+
+			let links = document.querySelectorAll("nav a")
+
+			links[1].onclick = validarLink
+			
+			function validarLink(evento){ // "Evento" es un parametro que puede tener cualquier nombre que almacena toda la informacion de lo que ocurrió ante un comportamiento. En este caso será de un click (por el onclik definido arriba)
+				evento.preventDeFault() // <-- Con esto, JS interrumpe el comportamiento predeterminado por HTML. En este caso me anula el comportamiento predeterminado del hipervinculo que me lleva a otro ejercicio.
+				let rta = confirm(`¿Está seguro que desea ir a ${evento.target.innerText}?`) // Confirm, como en el ejercicio 1. El target es como un querySelector del elemento que estoy clickeando (en este caso ej.2) por lo que podre manipular todo ese elemento. En este caso voy a llamar al parametro ("evento") al cual estoy clickeando, voy a manipularlo con el tarjet y voy a pedirle que me traiga su innerText que se va a llamar Ejercicio 2. 
+				if (rta = true) {
+					window.location.href = evento.target.href // Window es la ventana del navegador. Con window, JS controla todo el navegador. Acá le estoy diciendo que si mi respuesta es SI, entonces desde la localidad en donde estoy en mi navegador (window.location.href) me mande al evento antes definido.
+				}
+				console.log(`Se eligió la opcion: ${rta}`)
+			}
+
 		</script>
 	</body>
 </html>

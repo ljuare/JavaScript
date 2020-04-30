@@ -31,18 +31,36 @@
 
 		<script>
 			/* 1) Seleccionar el h1 y guardarlo en una variable */
+			let titulo = document.querySelector("h1")
 
 			/* 2) Modificar el texto interno de esta variable */
+			//titulo.innerText = "Texto desde JS"
 
 			/* 3) Una vez que funcione, probar poniendo el <script> en el <head> para corroborar que JavaScript se ejecuta secuencialmente! */
 
 			// EXTRA: Explicacion de Manipulaciones
 
 			/* 1) Manipulacion de Contenido */
-
+			//Todo lo que sea capturar un contenido y trabajar lo que tenga adentro.
+			//EJEMPLO: titulo.innerHTML = "Esto es una manipulación de <u>contenido</u>"
+			//Para esto sirve el innerHTML, para poder maquetar contenido y/o cosas a futuro.
+			
 			/* 2) Manipulacion de Estructura */
+			// Es jugar con los atributos de la etiqueta.
+			// EJEMPLO: titulo.style.color = "red" o titulo.style.backgroundColor = "black"
 
 			/* 3) Manipulacion de Comportamiento */
+			// La posibilidad de programar reacciones a cosas que haga el usuario.
+			// EJEMPLO: .Al evento onclick siempre hay que asignarle una funcion
+			
+			titulo.onclick = manipular
+			
+			function manipular(){
+				titulo.innerHTML = "Esto es una manipulación de <u>contenido</u>"
+				titulo.style.color = "red"
+				titulo.style.backgroundColor = "black"
+			}		
+			
 		</script>
 	</body>
 </html>

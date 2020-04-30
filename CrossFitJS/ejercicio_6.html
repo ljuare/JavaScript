@@ -35,12 +35,28 @@
 
 		<script>
 			/* 1) Seleccionar los campos por nombre utilizando la sintaxis CSS */
+			let email1 = document.querySelector('input[name="email"]')
+			let email2 = document.querySelector('input[name="email2"]')
 
 			/* 2) Asignar la funcion validarEmail al evento correspondiente */
+			// NO SE PONE PARENTENSIS CUANDO SE ASIGNA UN EVENTO!!!
+			// El evento de asignar una funcion al abandonar una casilla se llama onblur
+			email2.onblur = validarEmail
 
 			function validarEmail(){
+				//alert("Si leo esto es porque tudo bom")
 
 				/* 3) Si coinciden los valores, asignar la clase "ok", Sino... asignar la clase "error" */
+				// Si quiero comparar valores le tengo que poner siempre el value que está implicito en el html aunque no aparezca
+				
+				if (email2.value == email1.value) {
+					email2.classList.remove("error")
+					email2.classList.add("ok")
+				} else {
+					email2.classList.remove("ok")
+					email2.classList.add("error")
+					
+				}
 			}
 		</script>
 	</body>
