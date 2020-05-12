@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+		<title>MercadoTECH - Tu e-shop.js</title>
+		<link rel="stylesheet" href="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://blackrockdigital.github.io/startbootstrap-shop-item/css/shop-item.css">
+	</head>
+
+	<body>
+		<header class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
+			<div class="container">
+				<a class="navbar-brand font-weight-bold" href="#">&#x1F5A5; MercadoTECH</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Menu">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<nav class="collapse navbar-collapse" id="menu">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a id="login" class="nav-link" href="#">&#x1F512; Ingresar</a>
+						</li>
+						<li class="nav-item d-none">
+							<a id="logout" class="nav-link" href="#">Bienvenid@ <span>{{USUARIO}}</span> [x]</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<main class="container">
+			<h2 class="w-100 my-3 p-3 border">&#x2B50; Productos Destacados</h2>
+			<!-- AREA PRODUCTOS DESTACADOS -->
+			<section id="productos-destacados" class="row py-3">
+				<article class="col-4">
+					<div class="card h-100">
+						<a href="#">
+							<img class="card-img-top img-fluid" src="http://placeimg.com/480/320/tech" alt="">
+						</a>
+						<div class="card-body">
+							<h4 class="card-title"><a href="#">Producto X</a> <span class="badge badge-pill badge-success float-right">$999.99</span></h4>
+							<p class="card-text">9999 unid.</p>
+							<button class="btn btn-primary float-right">Comprar</button>
+						</div>
+					</div>	
+				</article>
+
+				<article class="col-4">
+					<div class="card h-100">
+						<a href="#">
+							<img class="card-img-top img-fluid" src="http://lorempixel.com/480/320/technics/" alt="">
+						</a>
+						<div class="card-body">
+							<h4 class="card-title"><a href="#">Producto X</a> <span class="badge badge-pill badge-success float-right">$999.99</span></h4>
+							<p class="card-text">9999 unid.</p>
+							<button class="btn btn-primary float-right">Comprar</button>
+						</div>
+					</div>	
+				</article>
+
+				<article class="col-4">
+					<div class="card h-100">
+						<a href="#">
+							<img class="card-img-top img-fluid" src="https://picsum.photos/480/320/" alt="">
+						</a>
+						<div class="card-body">
+							<h4 class="card-title"><a href="#">Producto Z</a> <span class="badge badge-pill badge-success float-right">$999.99</span></h4>
+							<p class="card-text">9999 unid.</p>
+							<button class="btn btn-primary float-right">Comprar</button>
+						</div>
+					</div>	
+				</article>
+
+			</section>
+		</main>
+		<footer class="py-5 bg-dark">
+			<div class="container">
+				<p class="m-0 text-center text-white">¡La mejor manera de comprar online!</p>
+			</div>
+		</footer>
+		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/jquery/jquery.min.js"></script>
+		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="producto.class.js"></script>
+		<script>
+			/*
+			let nombre = "iPhone X"
+			let stock = 1000
+			let precio = 499.99
+			*/
+			let otroProducto = { // <-- Objeto literal
+				precio : 1999.99,
+				nombre : "iPad Pro",
+				stock : 650
+			}
+
+			/*
+			let tercerProducto = {} // <-- Objeto diferido
+				
+			tercerProducto.nombre = "Samsung Galaxy S10"
+			tercerProducto.stock = 600
+			tercerProducto.precio = 1599.99
+			*/
+
+			const ficha = document.createElement("article") // Cuando se ejecuta el createElement solo le ponemos el nombre de la etiqueta
+
+			ficha.classList.add("col-4")
+			ficha.innerHTML = `<div class="card h-100">
+								<a href="#">
+									<img class="card-img-top img-fluid" src="http://placeimg.com/480/320/tech" alt="">
+								</a>
+								<div class="card-body">
+									<h4 class="card-title"><a href="#">${otroProducto.nombre}</a> <span class="badge badge-pill badge-success float-right">$${otroProducto.precio}</span></h4>
+									<p class="card-text">${otroProducto.stock} unid.</p>
+									<button class="btn btn-primary float-right">Comprar</button>
+								</div>
+							</div>`
+			
+			document.querySelector("#productos-destacados").appendChild(ficha)
+			
+			console.log(`Hay ${otroProducto.stock} unidades de ${otroProducto.nombre} que valen ${otroProducto.precio} cada una`)
+
+			// CREAR UN ARRAY CON 5 PRODUCTOS MAS Y AUTOMATIZAR EL PROCESO
+			/*
+				PRIMERA FORMA DE RESOLVERLO
+
+			let P1 = {
+				precio : 27000,
+				nombre : "PS4",
+				stock : 415
+			}
+			let P2 = {
+				precio : 20000,
+				nombre : "Xiaomi A2",
+				stock : 326
+			}
+			let P3 = {
+				precio : 5500,
+				nombre : "Joystick PS4",
+				stock : 800
+			}
+			let P4 = {
+				precio : 8400,
+				nombre : "Auriculares Elegiant",
+				stock : 220
+			}
+			let P5 = {
+				precio : 7499,
+				nombre : "Call of Duty: Warfare",
+				stock : 172
+			}
+
+			let productos = [P1,P2,P3,P4,P5]
+			//console.log(productos)
+
+			agregarProductos()
+
+			function agregarProductos(){
+				for(let i = 0; i < productos.length; i++){
+					const ficha = document.createElement("article")
+					ficha.classList.add("col-4")
+					ficha.innerHTML = `<div class="card h-100">
+								<a href="#">
+									<img class="card-img-top img-fluid" src="http://placeimg.com/480/320/tech" alt="">
+								</a>
+								<div class="card-body">
+									<h4 class="card-title"><a href="#">${productos[i].nombre}</a> <span class="badge badge-pill badge-success float-right">$${productos[i].precio}</span></h4>
+									<p class="card-text">${productos[i].stock} unid.</p>
+									<button class="btn btn-primary float-right">Comprar</button>
+								</div>
+							</div>`
+					document.querySelector("#productos-destacados").appendChild(ficha)
+				}
+			}
+			*/
+
+			// SEGUNDA FORMA DE RESOLVERLO. Esto tiene una clase que está en otro archivo (producto.class.js)
+
+		// Defino los objetos que seran del tipo "creados a traves de una clase"
+		let p1 = new Producto("iPhone SE", 500, 499.99, "http://lorempixel.com/480/320/technics/", "Apple") // <-- Instanciacion de un objeto producto
+		let p2 = new Producto("PS4", 312, 30000, "http://lorempixel.com/480/320/technics/", "Sony")
+		let p3 = new Producto("Galaxy Note 8", 750, 699.99, "http://placeimg.com/480/320/tech", "Motorola")
+			
+		p1.Descuento("UH7XTU78I")
+		// Les agrego la funcion mostrar a cada producto. Esta funcion es exclusiva del objeto Producto ya que está adentro de una clase
+		p1.Mostrar()
+		p2.Mostrar()
+		p3.Mostrar()
+
+		///////////////////////////////////////////////
+		// JSON - Es una forma de escritura (JavaScript Object Notation)
+		// Leer sobre objetos y JSON
+		/*
+		{
+			"nombre" : "Cafe",
+			"precio" : 45.63,
+			"stock" : 541,
+			"disponible" : false
+		}
+		*/
+
+		//////////////////////////CARGAR DATOS JSON DE MANERA REMOTA///////////////////////////////////////////////////////
+
+		// Con esta funcion (fetch) traigo la base de datos de productos que voy a utilizar en mi programacion
+		
+		fetch("https://api.npoint.io/6b51ed82842567c3a283").then(function(rta){ 
+
+			return rta.json() // Convierte los datos de JSON a objetos
+			
+		}).then(function(productos){
+
+			productos.forEach(function({Nombre,Stock,Precio,Imagen,Marca}){ // Llamo solo a las variables que necesito
+				let superProducto = new Producto(Nombre,Stock,Precio,Imagen,Marca) // Creo el objeto que va a contener a todos los productos y le asigno la clase producto
+				superProducto.Mostrar() // Ahora si puedo asignarle la funcion Mostrar, ya que ya tiene la clase Producto
+				
+			})
+				
+
+		})
+
+		// PARA CARGAR UN JSON LOCAL TAMBIEN PUEDO USAR FETCH PERO PRIMERO TENGO QUE CREAR UNA PAGINA YA QUE FETCH SOLO TRAE FORMATO HTTP O HTTPS
+		
+
+		</script>
+	</body>
+</html>
+
+
+
+
