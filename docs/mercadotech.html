@@ -201,19 +201,28 @@
 
 		// Con esta funcion (fetch) traigo la base de datos de productos que voy a utilizar en mi programacion
 		
-		fetch("https://api.npoint.io/6b51ed82842567c3a283").then(function(rta){ 
+		fetch("productos.json").then(function(rta){ 
 
 			return rta.json() // Convierte los datos de JSON a objetos
 			
-		}).then(function(productos){
+		}).then(function(objetos){
 
-			productos.forEach(function({Nombre,Stock,Precio,Imagen,Marca}){ // Llamo solo a las variables que necesito
+			/* BORRE TODA ESTA PARTE PORQUE CON LA FORMULA MAP ME AHORRO EL FOREACH////////
+			
+			console.log(objetos)
+
+			objetos.forEach(function({Nombre,Stock,Precio,Imagen,Marca}){ // Llamo solo a las variables que necesito
 				let superProducto = new Producto(Nombre,Stock,Precio,Imagen,Marca) // Creo el objeto que va a contener a todos los productos y le asigno la clase producto
 				superProducto.Mostrar() // Ahora si puedo asignarle la funcion Mostrar, ya que ya tiene la clase Producto
 				
 			})
-				
+			*/
 
+			//debugger
+			// El objetivo de esta variable (productos) va a ser una coleccion de objetos tipo producto
+			// El metodo map es como el metodo foreach pero está pensado para recorrer una coleccion y en cada iteraccion crear un nuevo item que se va a guardar en la variable receptora
+			let productos = objetos.map(({Nombre,Stock,Precio,Imagen,Marca}) => new Producto(Nombre,Stock,Precio,Imagen,Marca)) // Creo el objeto que va a contener a todos los productos y le asigno la clase producto
+			
 		})
 
 		// PARA CARGAR UN JSON LOCAL TAMBIEN PUEDO USAR FETCH PERO PRIMERO TENGO QUE CREAR UNA PAGINA YA QUE FETCH SOLO TRAE FORMATO HTTP O HTTPS
