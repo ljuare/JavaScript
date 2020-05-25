@@ -6,6 +6,16 @@
 		<title>MercadoTECH - Tu e-shop.js</title>
 		<link rel="stylesheet" href="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://blackrockdigital.github.io/startbootstrap-shop-item/css/shop-item.css">
+		<style>
+			article {
+				opacity: 0;
+				animation: fadeIn 3s forwards;
+			}
+			@keyframes fadeIn {
+				from { opacity: 0 }
+				to { opacity: 1 }
+			}
+		</style>
 	</head>
 
 	<body>
@@ -29,8 +39,15 @@
 		</header>
 		<main class="container">
 			<h2 class="w-100 my-3 p-3 border">&#x2B50; Productos Destacados</h2>
+			<nav id="filtros">
+				<button class="btn btn-secondary" data-min="0" data-max="500">$0 - $500</button>
+				<button class="btn btn-secondary" data-min="500" data-max="1500">$500 - $1500</button>
+				<button class="btn btn-secondary" data-min="1500" data-max="999999">+ $1500</button>
+			</nav>
 			<!-- AREA PRODUCTOS DESTACADOS -->
+		
 			<section id="productos-destacados" class="row py-3">
+			<!--
 				<article class="col-4">
 					<div class="card h-100">
 						<a href="#">
@@ -69,6 +86,7 @@
 						</div>
 					</div>	
 				</article>
+			-->
 
 			</section>
 		</main>
@@ -85,20 +103,20 @@
 			let nombre = "iPhone X"
 			let stock = 1000
 			let precio = 499.99
-			*/
+			
 			let otroProducto = { // <-- Objeto literal
 				precio : 1999.99,
 				nombre : "iPad Pro",
 				stock : 650
 			}
 
-			/*
+			
 			let tercerProducto = {} // <-- Objeto diferido
 				
 			tercerProducto.nombre = "Samsung Galaxy S10"
 			tercerProducto.stock = 600
 			tercerProducto.precio = 1599.99
-			*/
+			
 
 			const ficha = document.createElement("article") // Cuando se ejecuta el createElement solo le ponemos el nombre de la etiqueta
 
@@ -117,7 +135,7 @@
 			document.querySelector("#productos-destacados").appendChild(ficha)
 			
 			console.log(`Hay ${otroProducto.stock} unidades de ${otroProducto.nombre} que valen ${otroProducto.precio} cada una`)
-
+			*/
 			// CREAR UN ARRAY CON 5 PRODUCTOS MAS Y AUTOMATIZAR EL PROCESO
 			/*
 				PRIMERA FORMA DE RESOLVERLO
@@ -173,7 +191,7 @@
 			*/
 
 			// SEGUNDA FORMA DE RESOLVERLO. Esto tiene una clase que está en otro archivo (producto.class.js)
-
+		/*
 		// Defino los objetos que seran del tipo "creados a traves de una clase"
 		let p1 = new Producto("iPhone SE", 500, 499.99, "http://lorempixel.com/480/320/technics/", "Apple") // <-- Instanciacion de un objeto producto
 		let p2 = new Producto("PS4", 312, 30000, "http://lorempixel.com/480/320/technics/", "Sony")
@@ -184,7 +202,7 @@
 		p1.Mostrar()
 		p2.Mostrar()
 		p3.Mostrar()
-
+		*/
 		///////////////////////////////////////////////
 		// JSON - Es una forma de escritura (JavaScript Object Notation)
 		// Leer sobre objetos y JSON
@@ -200,34 +218,87 @@
 		//////////////////////////CARGAR DATOS JSON DE MANERA REMOTA///////////////////////////////////////////////////////
 
 		// Con esta funcion (fetch) traigo la base de datos de productos que voy a utilizar en mi programacion
-		
-		fetch("productos.json").then(function(rta){ 
+		//debugger
+		//let productos = null
+		/*
+		fetch("productos.json")
+				.then( rta => rta.json() )
+				.then( objetos => objetos.map( ({Nombre, Stock, Precio, Imagen, Marca}) => new Producto(Nombre, Stock, Precio, Imagen, Marca) ) )
+				.then( productos => productos.filter( producto => producto.precio > 249 && producto.stock > 100 ) )
+				.then( resultado => {
+					// Mostrar todos los productos...
+					if( resultado instanceof Array ){ //<-- Si el resultado es una array
 
-			return rta.json() // Convierte los datos de JSON a objetos
-			
-		}).then(function(objetos){
+						resultado.forEach( producto => {
+							producto.Mostrar()
+						})
+
+					} else {
+						resultado.Mostrar()
+					}
+					
+				})
+		*/
 
 			/* BORRE TODA ESTA PARTE PORQUE CON LA FORMULA MAP ME AHORRO EL FOREACH////////
 			
-			console.log(objetos)
-
-			objetos.forEach(function({Nombre,Stock,Precio,Imagen,Marca}){ // Llamo solo a las variables que necesito
+				objetos.forEach(function({Nombre,Stock,Precio,Imagen,Marca}){ // Llamo solo a las variables que necesito
 				let superProducto = new Producto(Nombre,Stock,Precio,Imagen,Marca) // Creo el objeto que va a contener a todos los productos y le asigno la clase producto
 				superProducto.Mostrar() // Ahora si puedo asignarle la funcion Mostrar, ya que ya tiene la clase Producto
 				
 			})
 			*/
 
-			//debugger
 			// El objetivo de esta variable (productos) va a ser una coleccion de objetos tipo producto
 			// El metodo map es como el metodo foreach pero está pensado para recorrer una coleccion y en cada iteraccion crear un nuevo item que se va a guardar en la variable receptora
-			let productos = objetos.map(({Nombre,Stock,Precio,Imagen,Marca}) => new Producto(Nombre,Stock,Precio,Imagen,Marca)) // Creo el objeto que va a contener a todos los productos y le asigno la clase producto
+			// El filter me sirve para filtrar los productos de acuerdo al criterio que yo quiera
+
+
+
+		// 1) Mostrar todos los productos...
 			
-		})
+		
+		///////////////////////////////////////
 
 		// PARA CARGAR UN JSON LOCAL TAMBIEN PUEDO USAR FETCH PERO PRIMERO TENGO QUE CREAR UNA PAGINA YA QUE FETCH SOLO TRAE FORMATO HTTP O HTTPS
 		
+		//////////////////////
+		const GET = async url => {
+			let rta = await fetch(url)
+			let objetos = await rta.json() // Retornar convertido de JSON a Objetos genericos 
+			return objetos
+		}
 
+		document.querySelectorAll("#filtros button").forEach(filtro => {
+			filtro.onclick = (evento) => {
+				let rango = {
+					min : evento.target.getAttribute("data-min"),
+					max : evento.target.getAttribute("data-max")
+				}
+				console.log(rango)
+			}
+		})
+		
+		const aguanta = timeout => { //aguanta(3000)
+			return new Promise( resolve => setTimeout(resolve, timeout) )
+		}
+		
+		window.onload = async() => { // Estoy asignando una funcion a un evento. Diciendo que cuando se cargue la pagina haga una serie de cosas (por eso funcion asincronica)
+			let objetos = await GET("productos.json")
+
+			let catalogo = Producto.armarCatalogo(objetos) // Armo una funcion en base a una clase (metodo estatico)
+
+			if (catalogo instanceof Array){
+				catalogo.forEach (async producto => {
+					await aguanta(3000)
+					await producto.Mostrar()
+				})
+			
+			} else {
+				catalogo.Mostrar()
+			}
+		}
+		
 		</script>
 	</body>
 </html>
