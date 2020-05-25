@@ -40,6 +40,7 @@
 		<main class="container">
 			<h2 class="w-100 my-3 p-3 border">&#x2B50; Productos Destacados</h2>
 			<nav id="filtros">
+				<button class="btn btn-secondary" data-min="0" data-max="999999">Todos los productos</button>
 				<button class="btn btn-secondary" data-min="0" data-max="500">$0 - $500</button>
 				<button class="btn btn-secondary" data-min="500" data-max="1500">$500 - $1500</button>
 				<button class="btn btn-secondary" data-min="1500" data-max="999999">+ $1500</button>
@@ -269,28 +270,27 @@
 			return objetos
 		}
 
-		document.querySelectorAll("#filtros button").forEach(filtro => {
-			filtro.onclick = (evento) => {
-				let rango = {
-					min : evento.target.getAttribute("data-min"),
-					max : evento.target.getAttribute("data-max")
-				}
-				console.log(rango)
-			}
-		})
 		
 		const aguanta = timeout => { //aguanta(3000)
 			return new Promise( resolve => setTimeout(resolve, timeout) )
 		}
 		
-		window.onload = async() => { // Estoy asignando una funcion a un evento. Diciendo que cuando se cargue la pagina haga una serie de cosas (por eso funcion asincronica)
-			let objetos = await GET("productos.json")
+		const mostrarCatalogo = async(rango) => { // Estoy asignando una funcion a un evento. Diciendo que cuando se cargue la pagina haga una serie de cosas (por eso funcion asincronica)
+			let objetos = null
+			if( !localStorage.getItem("CATALOGO") ){ //<-- Si NO hay un Local Storage ...
+				// ↓ Un Array de muchos Object
+				objetos = await GET("productos.json")
+				localStorage.setItem("CATALOGO", JSON.stringify(objetos) )
 
-			let catalogo = Producto.armarCatalogo(objetos) // Armo una funcion en base a una clase (metodo estatico)
+			} else { //<-- Si EFECTIVAMENTE hay un Local Storage ...
+				objetos = JSON.parse( localStorage.getItem("CATALOGO") ) 
+		
+			}
+
+			let catalogo = Producto.armarCatalogo(objetos, rango) // Armo una funcion en base a una clase (metodo estatico)
 
 			if (catalogo instanceof Array){
 				catalogo.forEach (async producto => {
-					await aguanta(3000)
 					await producto.Mostrar()
 				})
 			
@@ -298,11 +298,22 @@
 				catalogo.Mostrar()
 			}
 		}
-		
+
+		document.querySelectorAll("#filtros button").forEach(filtro => {
+			filtro.onclick = (evento) => {
+				let rango = {
+					min : evento.target.getAttribute("data-min"), // Con event.target obtengo la informacion de ese elemento clickeado
+					max : evento.target.getAttribute("data-max")
+				}
+				document.querySelector("#productos-destacados").innerHTML = null // Cada vez que toco el filtro se van a borrar los articulos del html y se van a crear los nuevos con el rango correspondiente
+				mostrarCatalogo(rango)
+			}
+		})
+
+		mostrarCatalogo()
+
+		//////////////////
+
 		</script>
 	</body>
 </html>
-
-
-
-

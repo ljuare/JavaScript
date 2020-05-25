@@ -35,9 +35,9 @@ class Producto { // Lo ideal siempre es tener separada la clase
     }
 
     //////////////////////////
-    static armarCatalogo(objetos){ // Método estático: No es necesario crear el objeto
+    static armarCatalogo(objetos, rango){ // Método estático: No es necesario crear el objeto
         let productos = objetos.map( ({Nombre, Stock, Precio, Imagen, Marca}) => new Producto(Nombre, Stock, Precio, Imagen, Marca) )
-        let resultado = productos.filter (producto => producto.precio > 249 && producto.stock > 100)
+        let resultado = rango ? productos.filter (producto => producto.precio > rango.min && producto.precio < rango.max) : productos // El ? reemplaza al if y el : reemplaza al else. Significa que si existe rango me devuelva esos productos y si no existe me devuelva todos. Esto es un operador ternario
         return resultado
     }
 
