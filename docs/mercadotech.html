@@ -280,7 +280,7 @@
 			if( !localStorage.getItem("CATALOGO") ){ //<-- Si NO hay un Local Storage ...
 				// ↓ Un Array de muchos Object
 				objetos = await GET("productos.json")
-				localStorage.setItem("CATALOGO", JSON.stringify(objetos) )
+				localStorage.setItem("CATALOGO", JSON.stringify(objetos) ) // De esta manera no voy a solicitarle al servidor la misma informacion una y otra vez. Hago un backup de mi catalogo con storage y va a tomar la informacion de ahi siempre.
 
 			} else { //<-- Si EFECTIVAMENTE hay un Local Storage ...
 				objetos = JSON.parse( localStorage.getItem("CATALOGO") ) 
