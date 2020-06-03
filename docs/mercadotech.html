@@ -264,6 +264,8 @@
 
 		// PARA CARGAR UN JSON LOCAL TAMBIEN PUEDO USAR FETCH PERO PRIMERO TENGO QUE CREAR UNA PAGINA YA QUE FETCH SOLO TRAE FORMATO HTTP O HTTPS
 		//////////////////////////////////////
+		window.auth2 = null
+		
 		gapi.load("auth2", () => {
 			let credenciales = {
 				client_id: '250480340911-cqugka8976futvruek5c32810c5ok3vo.apps.googleusercontent.com',
@@ -297,6 +299,11 @@
 
 			document.querySelector("#login").classList.remove("d-none")
 			document.querySelector("#logout").classList.add("d-none")
+
+			document.querySelectorAll(".btn-editar").forEach(btn => {
+				btn.classList.remove("d-block")
+				btn.classList.add("d-none")
+			})
 		}
 
 		//Bienvenida
@@ -307,6 +314,10 @@
 
 			document.querySelector("#login").classList.add("d-none")
 			document.querySelector("#logout").classList.remove("d-none")
+
+			document.querySelectorAll(".btn-editar").forEach(btn => {
+				btn.classList.remove("d-none")
+			})
 		}
 		//////////////////////
 		const GET = async url => {
